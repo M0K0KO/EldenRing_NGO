@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Moko
 {
@@ -7,6 +8,7 @@ namespace Moko
         [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
+        [HideInInspector] public PlayerStatsManager playerStatsManager;
         
         protected override void Awake()
         {
@@ -17,6 +19,7 @@ namespace Moko
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
             playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
             playerNetworkManager = GetComponent<PlayerNetworkManager>();
+            playerStatsManager = GetComponent<PlayerStatsManager>();
         }
 
         protected override void Update()
@@ -28,6 +31,9 @@ namespace Moko
             
             // Handle Movement
             playerLocomotionManager.HandleAllMovement();
+            
+            // Regen Stamina
+            playerStatsManager.RegenerateStamina();
         }
 
         protected override void LateUpdate()
@@ -47,7 +53,39 @@ namespace Moko
             {
                 PlayerCamera.instance.player = this;
                 PlayerInputManager.instance.player = this;
+                WorldSaveGameManager.instance.player = this;
+
+                playerNetworkManager.currentStamina.OnValueChanged +=
+                    PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
+                playerNetworkManager.currentStamina.OnValueChanged +=
+                    playerStatsManager.ResetStaminaRegenTimer;
+                
+                // this will be moved when saving and loading is added
+                playerNetworkManager.maxStamina.Value = 
+                    playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
+                playerNetworkManager.currentStamina.Value = 
+                    playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
+                PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
             }
+        }
+
+        public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)
+        {
+            currentCharacterData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
+            currentCharacterData.characterName = playerNetworkManager.characterName.Value.ToString();
+            currentCharacterData.xPosition = transform.position.x;
+            currentCharacterData.yPosition = transform.position.y;
+            currentCharacterData.zPosition = transform.position.z;
+        }
+
+        public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
+        {
+            playerNetworkManager.characterName.Value = currentCharacterData.characterName;
+            Vector3 myPosition = new Vector3(
+                currentCharacterData.xPosition, 
+                currentCharacterData.yPosition, 
+                currentCharacterData.zPosition);
+            transform.position = myPosition;
         }
     }
 }

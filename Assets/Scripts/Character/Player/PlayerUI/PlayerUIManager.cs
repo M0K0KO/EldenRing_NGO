@@ -11,10 +11,14 @@ namespace Moko
         [Header("NETWORK JOIN")] 
         [SerializeField] private bool startGameAsClient = false;
 
+        [HideInInspector] public PlayerUIHudManager playerUIHudManager;
+
         private void Awake()
         {
             if (instance == null) instance = this;
             else Destroy(gameObject);
+            
+            playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
         }
 
         private void Start()

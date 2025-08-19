@@ -16,9 +16,11 @@ namespace Moko
         [SerializeField] private float runningSpeed = 5f;
         [SerializeField] private float sprintingSpeed = 6.5f;
         [SerializeField] private float rotationSpeed = 15f;
+        [SerializeField] private int sprintingStaminaCost = 2;
 
         [Header("Dodge")] 
         private Vector3 rollDirection;
+        [SerializeField] private float dodgeStaminaCost = 25f;
 
         protected override void Awake()
         {
@@ -125,8 +127,12 @@ namespace Moko
                 // set sprinting to false
                 player.playerNetworkManager.isSprinting.Value = false;
             }
-            
-            // if out of stamina, set sprinting to false
+
+            if (player.playerNetworkManager.currentStamina.Value <= 0)
+            {
+                player.playerNetworkManager.isSprinting.Value = false;
+                return;
+            }
 
             if (moveAmount >= 0.5f)  // if we are moving set sprinting to true
             {
@@ -136,11 +142,17 @@ namespace Moko
             {
                 player.playerNetworkManager.isSprinting.Value = false;
             }
+
+            if (player.playerNetworkManager.isSprinting.Value)
+            {
+                player.playerNetworkManager.currentStamina.Value -= sprintingStaminaCost * Time.deltaTime;
+            }
         }
 
         public void AttemptToPerformDodge()
         {
             if (player.isPerformingAction) return;
+            if (player.playerNetworkManager.currentStamina.Value <= 0) return;
             
             // if we are moving when we attempt to dodge, we perform a roll
             if (PlayerInputManager.instance.moveAmount > 0)
@@ -164,6 +176,8 @@ namespace Moko
                 // perform a backstep animation
                 player.playerAnimatorManager.PlayeTargetActionAnimation("Back_Step_01", true, true);
             }
+
+            player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
         }
     }
 }
