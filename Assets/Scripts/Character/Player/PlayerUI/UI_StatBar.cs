@@ -6,12 +6,17 @@ namespace Moko
     public class UI_StatBar : MonoBehaviour
     {
         private Slider slider;
-        // variable to scale bar size depending on stat (higher stat = longer bar across screen)
+        private RectTransform rectTransform;
+        
+        [Header("Bar Options")] 
+        [SerializeField] protected bool scaleBarLengthWithStats = true;
+        [SerializeField] protected float widthScaleMultiplier = 1f;
         // secondary bar behind may bar for polish effect (yellow bar that shows how much an action/damage takes away 
 
         protected virtual void Awake()
         {
             slider = GetComponent<Slider>();
+            rectTransform = GetComponent<RectTransform>();
         }
 
         public virtual void SetStat(int newValue)
@@ -23,6 +28,15 @@ namespace Moko
         {
             slider.maxValue = maxValue;
             slider.value = maxValue;
+
+            if (scaleBarLengthWithStats)
+            {
+                // Scale the transform of this object
+                rectTransform.sizeDelta = new Vector2(maxValue * widthScaleMultiplier, rectTransform.sizeDelta.y);
+                
+                // Resets the position of the bars based on their layout 
+                PlayerUIManager.instance.playerUIHudManager.RefreshHUD();
+            }
         }
     }
 }

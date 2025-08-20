@@ -2040,6 +2040,7 @@ GameObject:
   - component: {fileID: 3206626196558358407}
   - component: {fileID: -8340495040275308289}
   - component: {fileID: -4683774315195329131}
+  - component: {fileID: -8818470572936041016}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -2290,8 +2291,8 @@ MonoBehaviour:
   dodgeStaminaCost: 25
   jumpStaminaCost: 25
   jumpHeight: 1.8
-  jumpForwardSpeed: 5
-  freeFallSpeed: 2
+  jumpForwardSpeed: 4
+  freeFallSpeed: 4
 --- !u!114 &7575071151742398071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2433,3 +2434,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staminaRegenerationAmount: 2
   staminaRegenerationDelay: 2
+--- !u!114 &-8818470572936041016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9156350476351252429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae08e0d9f51b6724597b7527a41ab5e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectToTest: {fileID: 11400000, guid: 0f550c5dd1181ec4cb353e16fa40f91b, type: 2}
+  processEffect: 0

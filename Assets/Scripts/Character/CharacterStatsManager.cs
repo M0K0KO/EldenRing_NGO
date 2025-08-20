@@ -16,6 +16,21 @@ namespace Moko
         {
             character = GetComponent<CharacterManager>();
         }
+
+        protected virtual void Start()
+        {
+            
+        }
+        
+        public int CalculateHealthBasedOnVitalityLevel(int vitality)
+        {
+            float health = 0;
+            
+            // create an equation for how you want your stamina to be calculated
+
+            health = vitality * 15;
+            return Mathf.RoundToInt(health);
+        }
         
         public int CalculateStaminaBasedOnEnduranceLevel(int endurance)
         {

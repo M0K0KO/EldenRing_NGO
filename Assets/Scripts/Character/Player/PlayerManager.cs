@@ -55,27 +55,37 @@ namespace Moko
                 PlayerInputManager.instance.player = this;
                 WorldSaveGameManager.instance.player = this;
 
+                // Update the total amount of health or stamina when the stat linked to either changes
+                playerNetworkManager.vitality.OnValueChanged +=
+                    playerNetworkManager.SetNewMaxHealthValue;              
+                playerNetworkManager.endurance.OnValueChanged +=
+                    playerNetworkManager.SetNewMaxStaminaValue;
+                
+                // Updates UI stat bars when a stat changes
+                playerNetworkManager.currentHealth.OnValueChanged +=
+                    PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue;
+                
                 playerNetworkManager.currentStamina.OnValueChanged +=
                     PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
                 playerNetworkManager.currentStamina.OnValueChanged +=
                     playerStatsManager.ResetStaminaRegenTimer;
-                
-                // this will be moved when saving and loading is added
-                playerNetworkManager.maxStamina.Value = 
-                    playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
-                playerNetworkManager.currentStamina.Value = 
-                    playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
-                PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
             }
         }
 
         public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)
         {
             currentCharacterData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
+            
             currentCharacterData.characterName = playerNetworkManager.characterName.Value.ToString();
             currentCharacterData.xPosition = transform.position.x;
             currentCharacterData.yPosition = transform.position.y;
             currentCharacterData.zPosition = transform.position.z;
+
+            currentCharacterData.vitality = playerNetworkManager.vitality.Value;
+            currentCharacterData.endurance = playerNetworkManager.endurance.Value;
+            
+            currentCharacterData.currentHealth = playerNetworkManager.currentHealth.Value;
+            currentCharacterData.currentStamina = playerNetworkManager.currentStamina.Value;
         }
 
         public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
@@ -86,6 +96,19 @@ namespace Moko
                 currentCharacterData.yPosition, 
                 currentCharacterData.zPosition);
             transform.position = myPosition;
+            
+            playerNetworkManager.vitality.Value = currentCharacterData.vitality;
+            playerNetworkManager.endurance.Value = currentCharacterData.endurance;
+            
+            // this will be moved when saving and loading is added
+            playerNetworkManager.maxHealth.Value =
+                playerStatsManager.CalculateHealthBasedOnVitalityLevel(playerNetworkManager.vitality.Value);
+            playerNetworkManager.maxStamina.Value = 
+                playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
+
+            playerNetworkManager.currentHealth.Value = currentCharacterData.currentHealth;
+            playerNetworkManager.currentStamina.Value = currentCharacterData.currentStamina;
+            PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
         }
     }
 }
