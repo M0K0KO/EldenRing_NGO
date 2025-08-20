@@ -30,6 +30,7 @@ namespace Moko
         [Header("PLAYER ACTION INPUT")]
         [SerializeField] private bool dodgeInput = false;
         [SerializeField] private bool sprintInput = false;
+        [SerializeField] private bool jumpInput = false;
 
         private void Awake()
         {
@@ -76,6 +77,8 @@ namespace Moko
                 
                 playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
                 playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
+                
+                playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
             }
 
             playerControls.Enable();
@@ -113,7 +116,8 @@ namespace Moko
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
             HandleDodgeInput();
-            HandleSprinting();
+            HandleSprintInput();
+            HandleJumpInput();
         }
         
         // MOVEMENT
@@ -163,7 +167,7 @@ namespace Moko
             }
         }
 
-        private void HandleSprinting()
+        private void HandleSprintInput()
         {
             if (sprintInput)
             {
@@ -173,6 +177,16 @@ namespace Moko
             else
             {
                 player.playerNetworkManager.isSprinting.Value = false;
+            }
+        }
+
+        private void HandleJumpInput()
+        {
+            if (jumpInput)
+            {
+                jumpInput = false;
+
+                player.playerLocomotionManager.AttemptToPerformJump();
             }
         }
     }

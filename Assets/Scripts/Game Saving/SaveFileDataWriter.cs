@@ -76,7 +76,7 @@ namespace Moko
                 }
                 catch (Exception ex)
                 {
-                    
+                    Debug.Log("FAILED TO LOAD SAVE FILE");
                 }
             }
             return characterData;

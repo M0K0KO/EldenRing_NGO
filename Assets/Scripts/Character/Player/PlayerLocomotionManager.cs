@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Moko
 {
@@ -10,6 +11,7 @@ namespace Moko
         [HideInInspector] public float horizontalMovement;
         [HideInInspector] public float moveAmount;
 
+        [Header("Movment Settings")]
         private Vector3 moveDirection;
         private Vector3 targetRotationDirection;
         [SerializeField] private float walkingSpeed = 2f;
@@ -21,6 +23,13 @@ namespace Moko
         [Header("Dodge")] 
         private Vector3 rollDirection;
         [SerializeField] private float dodgeStaminaCost = 25f;
+        
+        [Header("Jump")]
+        [SerializeField] private float jumpStaminaCost = 25f;
+        [SerializeField] private float jumpHeight = 4f;
+        [SerializeField] private float jumpForwardSpeed = 5f;
+        [SerializeField] private float freeFallSpeed = 2f;
+        private Vector3 jumpDirection;
 
         protected override void Awake()
         {
@@ -55,9 +64,8 @@ namespace Moko
         {
             HandleGroundedMovement();
             HandleRotation();
-
-            // Aerial Movement
-            // Falling
+            HandleJumpingMovement();
+            HandleFreeFallMovement();
         }
 
         private void GetMovementValues()
@@ -68,7 +76,7 @@ namespace Moko
             
             // clamp the movements
         }
-
+ 
         private void HandleGroundedMovement()
         {
             if (!player.canMove) return;
@@ -97,6 +105,28 @@ namespace Moko
                     // Move at a walking speed;
                     player.characterController.Move(moveDirection * (walkingSpeed * Time.deltaTime));
                 }
+            }
+        }
+
+        private void HandleJumpingMovement()
+        {
+            if (player.isJumping)
+            {
+                player.characterController.Move(jumpDirection * (jumpForwardSpeed * Time.deltaTime));
+            }
+        }
+
+        private void HandleFreeFallMovement()
+        {
+            if (!player.isGrounded)
+            {
+                Vector3 freefallDirection = Vector3.zero;
+                
+                freefallDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;;
+                freefallDirection += PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontalInput;;
+                freefallDirection.y = 0;
+                
+                player.characterController.Move(freefallDirection * (freeFallSpeed * Time.deltaTime));
             }
         }
 
@@ -178,6 +208,48 @@ namespace Moko
             }
 
             player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
+        }
+
+        public void AttemptToPerformJump()
+        {
+            if (player.isPerformingAction) return;
+            if (player.playerNetworkManager.currentStamina.Value <= 0) return;
+            if (player.isJumping) return;
+            if (!player.isGrounded) return;
+            
+            // if two handed, play two handed jump Animation
+            player.playerAnimatorManager.PlayeTargetActionAnimation("Main_Jump_01", false);
+
+            player.isJumping = true;
+
+            player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
+            
+            jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+            jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+
+            jumpDirection.y = 0;
+
+            if (jumpDirection != Vector3.zero)
+            {
+                if (player.playerNetworkManager.isSprinting.Value)
+                {
+                    jumpDirection *= 1;
+                }
+                else if (player.playerNetworkManager.moveAmount.Value > 0.5f)
+                {
+                    jumpDirection *= 0.5f;
+                }
+                else if (player.playerNetworkManager.moveAmount.Value <= 0.5f)
+                {
+                    jumpDirection *= 0.25f;
+                }
+            }
+        }
+
+        public void ApplyJumpingVelocity()
+        {
+            // Apply an upward velocity depending on forces in game
+            yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
         }
     }
 }

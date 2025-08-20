@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEditor;
 
 namespace Moko
 {
@@ -13,6 +14,8 @@ namespace Moko
 
         [Header("Flags")]
         public bool isPerformingAction = false;
+        public bool isJumping = false;
+        public bool isGrounded = true;
         public bool applyRootMotion = false;
         public bool canRotate = true;
         public bool canMove = true;
@@ -28,6 +31,8 @@ namespace Moko
 
         protected virtual void Update()
         {
+            animator.SetBool("isGrounded", isGrounded);
+            
             if (IsOwner) // has an authority to change position
             {
                 characterNetworkManager.networkPosition.Value = transform.position;

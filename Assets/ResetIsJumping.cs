@@ -1,12 +1,11 @@
 using UnityEngine;
 
-
 namespace Moko
 {
-    public class ResetCharacterFlag : StateMachineBehaviour
+    public class ResetIsJumping : StateMachineBehaviour
     {
         private CharacterManager character;
-        
+
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -14,12 +13,7 @@ namespace Moko
             {
                 character = animator.GetComponent<CharacterManager>();
             }
-
-            // this is called when an actions ends, and the state returns to empty
-            character.isPerformingAction = false;
-            character.applyRootMotion = false;
-            character.canRotate = true;
-            character.canMove = true;
+            
             character.isJumping = false;
         }
 
