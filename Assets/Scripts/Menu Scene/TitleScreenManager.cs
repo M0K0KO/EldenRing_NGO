@@ -75,7 +75,7 @@ namespace Moko
         public void CloseNoFreeCharacterSlotsPopUp()
         {
             noCharacterSlotsPopUp.SetActive(false);
-            //mainMenuNewGameButton.Select();
+            mainMenuNewGameButton.Select();
         }
 
         public void SelecteCharacterSlot(CharacterSlot characterSlot)

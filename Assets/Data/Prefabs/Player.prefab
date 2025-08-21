@@ -2097,8 +2097,8 @@ GameObject:
   - component: {fileID: -4209163712753974144}
   - component: {fileID: 2256833415166451516}
   - component: {fileID: -9105452911830266856}
-  - component: {fileID: 5813970734639706320}
   - component: {fileID: 7575071151742398071}
+  - component: {fileID: 5813970734639706320}
   - component: {fileID: 3206626196558358407}
   - component: {fileID: -8340495040275308289}
   - component: {fileID: -4683774315195329131}
@@ -2292,7 +2292,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
+  SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
@@ -2333,39 +2333,6 @@ MonoBehaviour:
   playerStatsManager: {fileID: 0}
   playerInventoryManager: {fileID: 0}
   playerEquipmentManager: {fileID: 0}
---- !u!114 &5813970734639706320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9156350476351252429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7bcffc8764bd5048baaef1a2417e869, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravityForce: -40
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  groundCheckSphereRadius: 0.2
-  yVelocity: {x: 0, y: 0, z: 0}
-  groundedYVelocity: -20
-  fallStartYVelocity: -5
-  verticalMovement: 0
-  horizontalMovement: 0
-  moveAmount: 0
-  walkingSpeed: 1.5
-  runningSpeed: 4.5
-  sprintingSpeed: 7
-  rotationSpeed: 15
-  sprintingStaminaCost: 2
-  dodgeStaminaCost: 25
-  jumpStaminaCost: 25
-  jumpHeight: 1.8
-  jumpForwardSpeed: 4
-  freeFallSpeed: 4
 --- !u!114 &7575071151742398071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2395,7 +2362,7 @@ MonoBehaviour:
   isSprinting:
     m_InternalValue: 0
   vitality:
-    m_InternalValue: 10
+    m_InternalValue: 15
   endurance:
     m_InternalValue: 10
   currentStamina:
@@ -2479,6 +2446,39 @@ MonoBehaviour:
     m_InternalValue: 0
   currentLeftHandWeaponID:
     m_InternalValue: 0
+--- !u!114 &5813970734639706320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9156350476351252429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7bcffc8764bd5048baaef1a2417e869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityForce: -40
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  groundCheckSphereRadius: 0.2
+  yVelocity: {x: 0, y: 0, z: 0}
+  groundedYVelocity: -20
+  fallStartYVelocity: -5
+  verticalMovement: 0
+  horizontalMovement: 0
+  moveAmount: 0
+  walkingSpeed: 1.5
+  runningSpeed: 4.5
+  sprintingSpeed: 7
+  rotationSpeed: 15
+  sprintingStaminaCost: 2
+  dodgeStaminaCost: 25
+  jumpStaminaCost: 25
+  jumpHeight: 1.8
+  jumpForwardSpeed: 4
+  freeFallSpeed: 4
 --- !u!114 &3206626196558358407
 MonoBehaviour:
   m_ObjectHideFlags: 0

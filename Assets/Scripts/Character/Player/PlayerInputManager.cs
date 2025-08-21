@@ -51,7 +51,7 @@ namespace Moko
         private void OnSceneChange(Scene oldScene, Scene newScene)
         {
             // if we are loading into our world scene, enable our players controls
-            if (newScene.buildIndex == WorldSaveGameManager.instance.GetWorldScneneIndex())
+            if (newScene.buildIndex == WorldSaveGameManager.instance.GetWorldSceneIndex())
             {
                 instance.enabled = true;
             }

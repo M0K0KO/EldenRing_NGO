@@ -29,10 +29,11 @@ namespace Moko
         
         protected virtual void Awake()
         {
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
             
             characterController = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
+            
             characterNetworkManager = GetComponent<CharacterNetworkManager>();
             characterEffectsManager = GetComponent<CharacterEffectsManager>();
             characterAnimatorManager = GetComponent<CharacterAnimatorManager>();

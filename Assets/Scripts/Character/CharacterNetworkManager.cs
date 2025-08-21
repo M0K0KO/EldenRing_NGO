@@ -20,8 +20,8 @@ namespace Moko
                 NetworkVariableReadPermission.Everyone,
                 NetworkVariableWritePermission.Owner);
         public Vector3 networkPositionVelocity;
-        public float networkPositionSmoothTime = 0.001f;
-        public float networkRotationSmoothTime = 0.01f;
+        public float networkPositionSmoothTime = 0.01f;
+        public float networkRotationSmoothTime = 0.1f;
         
         [Header("Animator")]
         public NetworkVariable<float> horizontalMovement =
@@ -50,12 +50,12 @@ namespace Moko
         [Header("Stats")]
         public NetworkVariable<int> vitality =
             new NetworkVariable<int>(
-                10,
+                1,
                 NetworkVariableReadPermission.Everyone, 
                 NetworkVariableWritePermission.Owner);
         public NetworkVariable<int> endurance =
             new NetworkVariable<int>(
-                10,
+                1,
                 NetworkVariableReadPermission.Everyone, 
                 NetworkVariableWritePermission.Owner);
         
