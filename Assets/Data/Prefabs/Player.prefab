@@ -2384,8 +2384,8 @@ MonoBehaviour:
   networkRotation:
     m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
   networkPositionVelocity: {x: 0, y: 0, z: 0}
-  networkPositionSmoothTime: 0.001
-  networkRotationSmoothTime: 0.01
+  networkPositionSmoothTime: 0.01
+  networkRotationSmoothTime: 0.1
   horizontalMovement:
     m_InternalValue: 0
   verticalMovement:
