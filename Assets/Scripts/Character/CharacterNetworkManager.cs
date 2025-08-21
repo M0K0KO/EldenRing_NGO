@@ -86,6 +86,23 @@ namespace Moko
             character = GetComponent<CharacterManager>();
         }
 
+        public void CheckHP(int oldValue, int newValue)
+        {
+            if (currentHealth.Value <= 0)
+            {
+                StartCoroutine(character.ProcessDeathEvent());
+            }
+
+            // prevents from over healing
+            if (character.IsOwner)
+            {
+                if (currentHealth.Value > maxHealth.Value)
+                {
+                    currentHealth.Value = maxHealth.Value;
+                }
+            }
+        }
+
         [ServerRpc]
         public void NotifyTheServerofActionAnimationServerRpc(ulong clientId, string animationID, bool applyRootMotion)
         {

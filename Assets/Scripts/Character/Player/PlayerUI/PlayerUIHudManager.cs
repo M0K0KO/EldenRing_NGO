@@ -18,7 +18,7 @@ namespace Moko
         
         public void SetNewHealthValue(int oldValue, int newValue)
         {
-            healthBar.SetStat(Mathf.RoundToInt(newValue));
+            healthBar.SetStat(newValue);
         }
 
         public void SetMaxHealthValue(int maxHealth)

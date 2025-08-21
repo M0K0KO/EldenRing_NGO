@@ -47,7 +47,7 @@ namespace Moko
 
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot02.characterName;
                 }
                 else
                 {
@@ -61,7 +61,7 @@ namespace Moko
 
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot03.characterName;
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace Moko
 
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot04.characterName;
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace Moko
 
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot05.characterName;
                 }
                 else
                 {
@@ -103,7 +103,7 @@ namespace Moko
 
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot06.characterName;
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace Moko
 
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot07.characterName;
                 }
                 else
                 {
@@ -131,7 +131,7 @@ namespace Moko
 
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot08.characterName;
                 }
                 else
                 {
@@ -139,13 +139,13 @@ namespace Moko
                 }
             }
             else if (characterSlot == CharacterSlot.CharacterSlot_09)
-            {
+            {   
                 saveFileDataWriter.saveFileName =
                     WorldSaveGameManager.instance.DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(characterSlot);
 
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot09.characterName;
                 }
                 else
                 {
@@ -159,7 +159,7 @@ namespace Moko
 
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot10.characterName;
                 }
                 else
                 {

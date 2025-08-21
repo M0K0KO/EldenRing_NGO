@@ -198,13 +198,13 @@ namespace Moko
                 player.transform.rotation = playerRotation;
 
                 // perform a roll animation
-                player.playerAnimatorManager.PlayeTargetActionAnimation("Roll_Forward_01", true, true);
+                player.playerAnimatorManager.PlayTargetActionAnimation("Roll_Forward_01", true, true);
             }
             // if we are stationary, perform a backstep
             else
             {
                 // perform a backstep animation
-                player.playerAnimatorManager.PlayeTargetActionAnimation("Back_Step_01", true, true);
+                player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
             }
 
             player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
@@ -218,7 +218,7 @@ namespace Moko
             if (!player.isGrounded) return;
             
             // if two handed, play two handed jump Animation
-            player.playerAnimatorManager.PlayeTargetActionAnimation("Main_Jump_01", false);
+            player.playerAnimatorManager.PlayTargetActionAnimation("Main_Jump_01", false);
 
             player.isJumping = true;
 

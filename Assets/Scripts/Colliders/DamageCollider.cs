@@ -6,6 +6,9 @@ namespace Moko
 {
     public class DamageCollider : MonoBehaviour
     {
+        [Header("Collider")]
+        protected Collider damageCollider;
+        
         [Header("Damage")]
         public float physicalDamage = 0; // in the future will be split into "Standarad", "Strike", "Slash" and "Pierce"
         public float magicDamage = 0;
@@ -54,6 +57,17 @@ namespace Moko
             damageEffect.contactPoint = contactPoint;
             
             damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
+        }
+
+        public virtual void EnableDamageCollider()
+        {
+            damageCollider.enabled = true;
+        }
+
+        public virtual void DisableDamageCollider()
+        {
+            damageCollider.enabled = false;
+            charactersDamaged.Clear(); // reset the characters that have been hit when we reset the collider
         }
     }
 }

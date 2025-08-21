@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,10 +6,17 @@ namespace Moko
 {
     public class PlayerManager : CharacterManager
     {
+        [Header("DEBUG MENU")] 
+        [SerializeField] private bool respawnCharacter = false;
+        [SerializeField] private bool switchRightWeapon = false;
+        [SerializeField] private bool switchLeftWeapon = false;
+        
         [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
         [HideInInspector] public PlayerStatsManager playerStatsManager;
+        [HideInInspector] public PlayerInventoryManager playerInventoryManager;
+        [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
         
         protected override void Awake()
         {
@@ -20,6 +28,8 @@ namespace Moko
             playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
             playerNetworkManager = GetComponent<PlayerNetworkManager>();
             playerStatsManager = GetComponent<PlayerStatsManager>();
+            playerInventoryManager = GetComponent<PlayerInventoryManager>();
+            playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         }
 
         protected override void Update()
@@ -34,6 +44,8 @@ namespace Moko
             
             // Regen Stamina
             playerStatsManager.RegenerateStamina();
+
+            DebugMenu();
         }
 
         protected override void LateUpdate()
@@ -70,6 +82,43 @@ namespace Moko
                 playerNetworkManager.currentStamina.OnValueChanged +=
                     playerStatsManager.ResetStaminaRegenTimer;
             }
+
+            // STATS
+            playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP;
+            
+            // EQUIPMENT
+            playerNetworkManager.currentRightHandWeaponID.OnValueChanged +=
+                playerNetworkManager.OnCurrentRightHandWeaponIDChange;
+            playerNetworkManager.currentLeftHandWeaponID.OnValueChanged +=
+                playerNetworkManager.OnCurrentLeftHandWeaponIDChange;
+        }
+
+        public override void ReviveCharacter()
+        {
+            base.ReviveCharacter();
+
+            if (IsOwner)
+            {
+                playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
+                playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
+                // restore focus points
+                
+                // play rebirth effects
+                playerAnimatorManager.PlayTargetActionAnimation("Empty", false);
+            }
+        }
+
+        public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+        {
+            if (IsOwner)
+            {
+                PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
+            }
+            
+            return base.ProcessDeathEvent(manuallySelectDeathAnimation);
+            
+            // Check player that are alive, if 0 respawn characters
+
         }
 
         public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)
@@ -109,6 +158,28 @@ namespace Moko
             playerNetworkManager.currentHealth.Value = currentCharacterData.currentHealth;
             playerNetworkManager.currentStamina.Value = currentCharacterData.currentStamina;
             PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
+        }
+
+        // DEBUG DELTE LATER
+        private void DebugMenu()
+        {
+            if (respawnCharacter)
+            {
+                respawnCharacter = false;
+                ReviveCharacter();
+            }
+
+            if (switchRightWeapon)
+            {
+                switchRightWeapon = false;
+                playerEquipmentManager.SwitchRightWeapon();
+            }
+
+            if (switchLeftWeapon)
+            {
+                switchLeftWeapon = false;
+                playerEquipmentManager.SwitchLeftWeapon();
+            }
         }
     }
 }

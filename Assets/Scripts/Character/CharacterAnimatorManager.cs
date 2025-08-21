@@ -29,7 +29,7 @@ namespace Moko
             character.animator.SetFloat(vertical, verticalAmount, 0.1f, Time.deltaTime);
         }
 
-        public virtual void PlayeTargetActionAnimation
+        public virtual void PlayTargetActionAnimation
             (string targetAnimation,
                 bool isPerformingAction,
                 bool applyRootMotion = true,

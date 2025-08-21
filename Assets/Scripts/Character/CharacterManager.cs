@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEditor;
@@ -16,6 +17,7 @@ namespace Moko
         
         [HideInInspector] public CharacterNetworkManager characterNetworkManager;
         [HideInInspector] public CharacterEffectsManager characterEffectsManager;
+        [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
 
         [Header("Flags")]
         public bool isPerformingAction = false;
@@ -33,6 +35,7 @@ namespace Moko
             animator = GetComponent<Animator>();
             characterNetworkManager = GetComponent<CharacterNetworkManager>();
             characterEffectsManager = GetComponent<CharacterEffectsManager>();
+            characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         }
 
         protected virtual void Update()
@@ -62,6 +65,38 @@ namespace Moko
         }
 
         protected virtual void LateUpdate()
+        {
+            
+        }
+
+        public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+        {
+            if (IsOwner)
+            {
+                characterNetworkManager.currentHealth.Value = 0;
+                isDead.Value = true;
+                
+                //reset any flags here that need to be reset (NOTHING YET)
+                
+                // if we are not grounded, play an aerial death animation (NOT YET)
+
+                if (!manuallySelectDeathAnimation)
+                {
+                    characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
+                }
+
+            }
+            
+            // Play Death SFX
+
+            yield return new WaitForSeconds(5f);
+            
+            // Award players with runes
+            
+            // disable character
+        }
+
+        public virtual void ReviveCharacter()
         {
             
         }
