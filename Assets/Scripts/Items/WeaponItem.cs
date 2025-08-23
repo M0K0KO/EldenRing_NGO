@@ -22,27 +22,30 @@ namespace Moko
         public int holyDamage = 0;
         public int ligthningDamage = 0;
         
-        // weapon garud absorptions (blocking power)
+        // weapon gaurd absorptions (blocking power)
 
         [Header("Weapon Base Poise Damage")] 
         public float poiseDamage = 10;
         // offensive poise Bonus when attacking
         
-        // Weapon Modifiers
-        // LIGTH ATTACK MODIFIERS
+        [Header("Attack Modifiers")]
+        public float light_Attack_01_Modifier = 1.1f;
         // HEAVY ATTACK MODIFIERS
         // CRITICAL DAMAGE MODIFIER ETC
 
         [Header("Stamina Costs")] 
         public int baseStaminaCost = 20;
+        public float lightAttackStaminaCostMultiplier = 0.9f;
         // RUNNING ATTACK STAMINA COST MODIFIER
         // LIGHT ATTACK STAMINA COST MODIFIER
         // HEAVY ATTACK STAMINA COST MODIFIER ETC
         
         // item based actions
-        
+        [Header("Actions")] 
+        public WeaponItemAction oh_LMB_Action; // one handed, left mouse button, action
+
         // ASH OF WAR
-        
+
         // blocking sounds
     }
 }

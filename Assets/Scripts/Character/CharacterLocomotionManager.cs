@@ -40,7 +40,7 @@ namespace Moko
             else
             {
                 // if we are not jumping, and our falling velocity has not been set
-                if (!character.isJumping && !fallingVelocityHasBeenSet)
+                if (!character.characterNetworkManager.isJumping.Value && !fallingVelocityHasBeenSet)
                 {
                     fallingVelocityHasBeenSet = true;
                     yVelocity.y = fallStartYVelocity;
@@ -63,8 +63,8 @@ namespace Moko
 
         protected void OnDrawGizmosSelected()
         {
-            Gizmos.color = character.isGrounded ? Color.green : Color.red;
-            Gizmos.DrawWireSphere(transform.position, groundCheckSphereRadius);
+            /*Gizmos.color = character.isGrounded ? Color.green : Color.red;
+            Gizmos.DrawWireSphere(transform.position, groundCheckSphereRadius);*/
         }
     }
 }

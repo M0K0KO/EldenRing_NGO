@@ -31,6 +31,7 @@ namespace Moko
         [SerializeField] private bool dodgeInput = false;
         [SerializeField] private bool sprintInput = false;
         [SerializeField] private bool jumpInput = false;
+        [SerializeField] private bool LMB_Input = false;
 
         private void Awake()
         {
@@ -46,6 +47,11 @@ namespace Moko
             SceneManager.activeSceneChanged += OnSceneChange;
             
             instance.enabled = false;
+
+            if (playerControls != null)
+            {
+                playerControls.Disable();
+            }
         }
 
         private void OnSceneChange(Scene oldScene, Scene newScene)
@@ -54,12 +60,22 @@ namespace Moko
             if (newScene.buildIndex == WorldSaveGameManager.instance.GetWorldSceneIndex())
             {
                 instance.enabled = true;
+                
+                if (playerControls != null)
+                {
+                    playerControls.Enable();
+                }
             }
             // otherwise we must be at the main menu, disable our players controls
             // this is so our player cant move around if we enter things like a character creation menu etc..
             else
             {
                 instance.enabled = false;
+                
+                if (playerControls != null)
+                {
+                    playerControls.Disable();
+                }
             }
         }
 
@@ -70,15 +86,14 @@ namespace Moko
                 playerControls = new PlayerControls();
 
                 playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
-                
                 playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
-
                 playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
+                playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
+                playerControls.PlayerActions.LMB.performed += i => LMB_Input = true;
                 
                 playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
                 playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
                 
-                playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
             }
 
             playerControls.Enable();
@@ -118,6 +133,7 @@ namespace Moko
             HandleDodgeInput();
             HandleSprintInput();
             HandleJumpInput();
+            HandleLMBInput();
         }
         
         // MOVEMENT
@@ -187,6 +203,24 @@ namespace Moko
                 jumpInput = false;
 
                 player.playerLocomotionManager.AttemptToPerformJump();
+            }
+        }
+
+        private void HandleLMBInput()
+        {
+            if (LMB_Input)
+            {
+                LMB_Input = false;
+                
+                // if we have a ui window open, return and do nothing
+
+                player.playerNetworkManager.SetCharacterActionHand(true);
+                
+                // TODO : if two handing, use the two handed action
+
+                player.playerCombatManager.PerformWeaponBasedAction(
+                    player.playerInventoryManager.currentRightHandWeapon.oh_LMB_Action,
+                    player.playerInventoryManager.currentRightHandWeapon);
             }
         }
     }

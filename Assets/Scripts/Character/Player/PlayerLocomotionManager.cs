@@ -110,7 +110,7 @@ namespace Moko
 
         private void HandleJumpingMovement()
         {
-            if (player.isJumping)
+            if (player.playerNetworkManager.isJumping.Value)
             {
                 player.characterController.Move(jumpDirection * (jumpForwardSpeed * Time.deltaTime));
             }
@@ -214,13 +214,13 @@ namespace Moko
         {
             if (player.isPerformingAction) return;
             if (player.playerNetworkManager.currentStamina.Value <= 0) return;
-            if (player.isJumping) return;
+            if (player.playerNetworkManager.isJumping.Value) return;
             if (!player.isGrounded) return;
             
             // if two handed, play two handed jump Animation
             player.playerAnimatorManager.PlayTargetActionAnimation("Main_Jump_01", false);
-
-            player.isJumping = true;
+    
+            player.playerNetworkManager.isJumping.Value = true;
 
             player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
             

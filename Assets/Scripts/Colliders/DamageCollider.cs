@@ -7,7 +7,7 @@ namespace Moko
     public class DamageCollider : MonoBehaviour
     {
         [Header("Collider")]
-        protected Collider damageCollider;
+        [SerializeField] protected Collider damageCollider;
         
         [Header("Damage")]
         public float physicalDamage = 0; // in the future will be split into "Standarad", "Strike", "Slash" and "Pierce"
@@ -22,9 +22,15 @@ namespace Moko
         [Header("Characters Damaged")]
         protected List<CharacterManager> charactersDamaged = new List<CharacterManager>();
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void Awake()
         {
-            CharacterManager damageTarget = other.GetComponent<CharacterManager>();
+            
+        }
+
+        protected virtual void OnTriggerEnter(Collider other)
+        {
+            CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
+            
             if (damageTarget != null)
             {
                 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(contactPoint);

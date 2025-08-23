@@ -5,7 +5,7 @@ namespace Moko
 {
     public class WeaponManager : MonoBehaviour
     {
-        [SerializeField] private MeleeWeaponDamageCollider meleeDamageCollider;
+        public MeleeWeaponDamageCollider meleeDamageCollider;
 
         private void Awake()
         {
@@ -14,12 +14,14 @@ namespace Moko
 
         public void SetWeaponDamage(CharacterManager characterWieldingWeapon, WeaponItem weapon)
         {
-            meleeDamageCollider.characterCasuingDamage = characterWieldingWeapon;
+            meleeDamageCollider.characterCausingDamage = characterWieldingWeapon;
             meleeDamageCollider.physicalDamage = weapon.physicalDamage;
             meleeDamageCollider.magicDamage = weapon.magicDamage;
             meleeDamageCollider.fireDamage = weapon.fireDamage;
             meleeDamageCollider.holyDamage = weapon.holyDamage;
             meleeDamageCollider.lightningDamage = weapon.ligthningDamage;
+
+            meleeDamageCollider.light_Attack_01_Modifier = weapon.light_Attack_01_Modifier;
         }
     }
 }

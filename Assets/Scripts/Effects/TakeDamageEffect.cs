@@ -81,6 +81,7 @@ namespace Moko
                 finalDamageDealt = 1;
             }
             
+            Debug.Log($"FINAL DAMAGE DEALT : {finalDamageDealt}");
             character.characterNetworkManager.currentHealth.Value -= finalDamageDealt;
             
             // Calculate poise damage to determine if the character will be stunned

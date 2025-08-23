@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Straight Sword
   itemIcon: {fileID: 0}
   itemDescription: A Straight Sword
-  itemID: 0
+  itemID: 1
   weaponModel: {fileID: 6944096827917232947, guid: 31080c6effa18a742b4744be11fd33d4, type: 3}
   strengthREQ: 10
   dexREQ: 10
@@ -28,3 +28,4 @@ MonoBehaviour:
   ligthningDamage: 0
   poiseDamage: 25
   baseStaminaCost: 20
+  oh_LMB_Action: {fileID: 11400000, guid: 62313b856a9160e4ab51e3d97da9c611, type: 2}

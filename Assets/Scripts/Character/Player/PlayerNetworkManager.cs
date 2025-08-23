@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Collections;
@@ -14,7 +15,11 @@ namespace Moko
                 NetworkVariableReadPermission.Everyone,
                 NetworkVariableWritePermission.Owner);
 
-        [Header("Equipment")]
+        [Header("Equipment")] 
+        public NetworkVariable<int> currentWeaponBeingUsed =
+            new NetworkVariable<int>(0,
+                NetworkVariableReadPermission.Everyone,
+                NetworkVariableWritePermission.Owner);
         public NetworkVariable<int> currentRightHandWeaponID =
             new NetworkVariable<int>(
                 0, 
@@ -25,12 +30,36 @@ namespace Moko
                 0, 
                 NetworkVariableReadPermission.Everyone,
                 NetworkVariableWritePermission.Owner);
+        public NetworkVariable<bool> isUsingRightHand = 
+            new NetworkVariable<bool>(
+                false, 
+                NetworkVariableReadPermission.Everyone,
+                NetworkVariableWritePermission.Owner);
+        public NetworkVariable<bool> isUsingLeftHand = 
+            new NetworkVariable<bool>(
+                false, 
+                NetworkVariableReadPermission.Everyone,
+                NetworkVariableWritePermission.Owner);
 
         protected override void Awake()
         {
             base.Awake();
             
             player = GetComponent<PlayerManager>();
+        }
+
+        public void SetCharacterActionHand(bool rightHandedAction)
+        {
+            if (rightHandedAction)
+            {
+                isUsingLeftHand.Value = false;
+                isUsingRightHand.Value = true;
+            }
+            else
+            {
+                isUsingLeftHand.Value = true;
+                isUsingRightHand.Value = false;
+            }
         }
 
         public void SetNewMaxHealthValue(int oldVitality, int newVitality)
@@ -59,6 +88,45 @@ namespace Moko
             WeaponItem newWeapon = Instantiate(WorldItemDatabase.Instance.GetWeaponByID(newID));
             player.playerInventoryManager.currentLeftHandWeapon = newWeapon;
             player.playerEquipmentManager.LoadLeftWeapon();
+        }
+        
+        public void OnCurrentWeaponBeingUsedIDChange(int oldID, int newID)
+        {
+            WeaponItem newWeapon = Instantiate(WorldItemDatabase.Instance.GetWeaponByID(newID));
+            player.playerCombatManager.currentWeaponBeingUsed = newWeapon;
+        }
+        
+        // ITEM ACTIONS
+        [ServerRpc]
+        public void NotifyTheServerOfWeaponActionServerRpc(ulong clientID, int actionID, int weaponID)
+        {
+            if (IsServer)
+            {
+                NotifyTheServerOfWeaponActionClientRpc(clientID, actionID, weaponID);
+            }
+        }
+
+        [ClientRpc]
+        private void NotifyTheServerOfWeaponActionClientRpc(ulong clientID, int actionID, int weaponID)
+        {
+            if (clientID != NetworkManager.Singleton.LocalClientId)
+            {
+                PerformWeaponBasedAction(actionID, weaponID);
+            }
+        }
+
+        private void PerformWeaponBasedAction(int actionID, int weaponID)
+        {
+            WeaponItemAction weaponAction = WorldActionManager.instance.GetWeaponItemActionByID(actionID);
+
+            if (weaponAction != null)
+            {
+                weaponAction.AttemptToPerformAction(player, WorldItemDatabase.Instance.GetWeaponByID(weaponID));
+            }
+            else
+            {
+                Debug.LogError("ACTION IS NULL< CANNOT BE PERFORMED");
+            }
         }
     }
 }

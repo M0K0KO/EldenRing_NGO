@@ -28,3 +28,4 @@ MonoBehaviour:
   ligthningDamage: 0
   poiseDamage: 25
   baseStaminaCost: 5
+  oh_LMB_Action: {fileID: 11400000, guid: 32258ddad15e7da408a2892d0dea4473, type: 2}

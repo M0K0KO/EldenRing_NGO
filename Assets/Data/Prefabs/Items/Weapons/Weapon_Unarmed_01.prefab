@@ -41,8 +41,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5637310861674749855}
-  - component: {fileID: 8999185507232649326}
   - component: {fileID: 163392736144819055}
+  - component: {fileID: 8999185507232649326}
   m_Layer: 10
   m_Name: Damage Collider
   m_TagString: Untagged
@@ -65,6 +65,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7712035662235883202}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &163392736144819055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5644502106508351483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f61bc1693d6903c428525d830f4c1041, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 8999185507232649326}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  characterCasuingDamage: {fileID: 0}
+  light_Attack_01_Modifier: 0
 --- !u!135 &8999185507232649326
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -86,24 +106,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &163392736144819055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5644502106508351483}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f61bc1693d6903c428525d830f4c1041, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  physicalDamage: 0
-  magicDamage: 0
-  fireDamage: 0
-  lightningDamage: 0
-  holyDamage: 0
-  characterCasuingDamage: {fileID: 0}
 --- !u!1 &8567195578363145909
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,4 +183,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e57750fe6d64e4aa1e44fab22dad09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeDamageCollider: {fileID: 0}
+  meleeDamageCollider: {fileID: 163392736144819055}
