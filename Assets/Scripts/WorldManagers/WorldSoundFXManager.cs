@@ -1,11 +1,15 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Moko
 {
     public class WorldSoundFXManager : MonoBehaviour
     {
         public static WorldSoundFXManager instance;
+
+        [Header("Damage Sounds")] 
+        public AudioClip[] physicalDamageSFX;
 
         [Header("Action Sounds")]
         public AudioClip rollSFX;
@@ -19,6 +23,13 @@ namespace Moko
         private void Start()
         {
             DontDestroyOnLoad(this);
+        }
+
+        public AudioClip ChooseRandomSFXFromArray(AudioClip[] array)
+        {
+            int index = Random.Range(0, array.Length);
+
+            return array[index];
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
 namespace Moko
 {
@@ -62,7 +63,8 @@ namespace Moko
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
-
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
+            
             if (IsOwner)
             {
                 PlayerCamera.instance.player = this;
@@ -99,6 +101,23 @@ namespace Moko
             if (IsOwner && !IsServer)
             {
                 LoadGameDataFromCurrentCharacterData(ref WorldSaveGameManager.instance.currentCharacterData);
+            }
+        }
+
+        private void OnClientConnectedCallback(ulong clientID)
+        {
+            // keep a list of active players in the game
+            WorldGameSessionManager.instance.AddPlayerToActivePlayersList(this);
+
+            if (!IsServer && IsOwner)
+            {
+                foreach (var player in WorldGameSessionManager.instance.players)
+                {
+                    if (player != this)
+                    {
+                        player.LoadOtherPlayerCharacterWhenJoiningServer();
+                    }
+                }
             }
         }
 
@@ -169,6 +188,15 @@ namespace Moko
             
             PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
             PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value);
+        }
+
+        public void LoadOtherPlayerCharacterWhenJoiningServer()
+        {
+            // sync weapons
+            playerNetworkManager.OnCurrentRightHandWeaponIDChange(0, playerNetworkManager.currentRightHandWeaponID.Value);
+            playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
+            
+            // sync armors
         }
 
         // DEBUG DELTE LATER

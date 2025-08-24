@@ -8,6 +8,9 @@ namespace Moko
     {
         private CharacterManager character;
 
+        [Header("VFX")] 
+        [SerializeField] private GameObject bloodSplatterVFX;
+
         protected void Awake()
         {
             character = GetComponent<CharacterManager>();
@@ -25,6 +28,18 @@ namespace Moko
             // Take in an effect
             // process it
             effect.ProcessEffect(character);
+        }
+
+        public void PlayBloodSplatterVFX(Vector3 contactPoint)
+        {
+            if (bloodSplatterVFX != null) // if we manually have placed a blood splatter vfx on this model, play its version
+            {
+                GameObject bloodSplatter = Instantiate(bloodSplatterVFX, contactPoint, Quaternion.identity);
+            }
+            else // use the generic
+            {
+                GameObject bloodSplatter = Instantiate(WorldCharacterEffectsManager.instance.bloodSplatterVFX, contactPoint, Quaternion.identity);
+            }
         }
     }
 }
