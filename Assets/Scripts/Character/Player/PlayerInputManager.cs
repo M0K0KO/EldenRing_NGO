@@ -163,12 +163,11 @@ namespace Moko
                 if (player.playerCombatManager.currentTarget.isDead.Value)
                 {
                     player.playerNetworkManager.isLockedOn.Value = false;
+                    
+                    // Attempt to find new target
+                    if (lockOnCoroutine != null) StopCoroutine(lockOnCoroutine);
+                    lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget());
                 }
-                
-                // Attempt to find new target
-                
-                if (lockOnCoroutine != null) StopCoroutine(lockOnCoroutine);
-                lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget());
             }
 
             if (lock_On_Input && player.playerNetworkManager.isLockedOn.Value)
