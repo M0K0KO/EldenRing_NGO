@@ -113,6 +113,8 @@ namespace Moko
         private void PlayDirectionalBasedDamageAnimation(CharacterManager character)
         {
             if (!character.IsOwner) return;
+
+            if (character.isDead.Value) return;
             
             // [TODO] calculate if poise is broken
             poiseIsBroken = true;

@@ -55,8 +55,17 @@ namespace Moko
                 moveAmount = player.characterNetworkManager.moveAmount.Value;
                 
                 // if not locked on, pass move amount
-                player.playerAnimatorManager.UpdateAnimatorMovementParameters(
-                    0, moveAmount, player.playerNetworkManager.isSprinting.Value);
+                if (!player.playerNetworkManager.isLockedOn.Value || player.playerNetworkManager.isSprinting.Value)
+                {
+                    // not strafing
+                    player.playerAnimatorManager.UpdateAnimatorMovementParameters(
+                        0, moveAmount, player.playerNetworkManager.isSprinting.Value);
+                }
+                else // if locked on, pass horizontal/vertical movement
+                {
+                    player.playerAnimatorManager.UpdateAnimatorMovementParameters(
+                        horizontalMovement, verticalMovement, player.playerNetworkManager.isSprinting.Value);
+                }
             }
         }
 
@@ -70,8 +79,8 @@ namespace Moko
 
         private void GetMovementValues()
         {
-            verticalMovement = PlayerInputManager.instance.verticalInput;
-            horizontalMovement = PlayerInputManager.instance.horizontalInput;
+            verticalMovement = PlayerInputManager.instance.vertical_Input;
+            horizontalMovement = PlayerInputManager.instance.horizontal_Input;
             moveAmount = PlayerInputManager.instance.moveAmount;
             
             // clamp the movements
@@ -122,8 +131,8 @@ namespace Moko
             {
                 Vector3 freefallDirection = Vector3.zero;
                 
-                freefallDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;;
-                freefallDirection += PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontalInput;;
+                freefallDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.vertical_Input;;
+                freefallDirection += PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontal_Input;;
                 freefallDirection.y = 0;
                 
                 player.characterController.Move(freefallDirection * (freeFallSpeed * Time.deltaTime));
@@ -132,22 +141,61 @@ namespace Moko
 
         private void HandleRotation()
         {
-            if (!player.canRotate) return;
+            if (player.isDead.Value) return;
             
-            targetRotationDirection = Vector3.zero;
-            targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
-            targetRotationDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
-            targetRotationDirection.Normalize();
-            targetRotationDirection.y = 0;
+            if (!player.canRotate) return;
 
-            if (targetRotationDirection == Vector3.zero)
+            if (player.playerNetworkManager.isLockedOn.Value || player.playerLocomotionManager.isRolling)
             {
-                targetRotationDirection = transform.forward;
-            }
+                // if we are sprinting, dont rotate towards a lock on target
+                if (player.playerNetworkManager.isSprinting.Value)
+                {
+                    Vector3 targetDirection = Vector3.zero;
+                    targetDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+                    targetDirection += PlayerCamera.instance.transform.right * horizontalMovement;
+                    targetDirection.Normalize();
+                    targetDirection.y = 0;
 
-            Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
-            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
-            transform.rotation = targetRotation;
+                    if (targetDirection == Vector3.zero)
+                    {
+                        targetDirection = transform.forward;
+                    }
+                    
+                    Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                    Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                    transform.rotation = finalRotation;
+                }
+                else
+                {
+                    if (player.playerCombatManager.currentTarget == null) return;
+                    
+                    Vector3 targetDirection;
+                    targetDirection = player.playerCombatManager.currentTarget.transform.position - transform.position;
+                    targetDirection.y = 0;
+                    targetDirection.Normalize();
+                    
+                    Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                    Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                    transform.rotation = finalRotation;
+                }
+            }
+            else
+            {
+                targetRotationDirection = Vector3.zero;
+                targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+                targetRotationDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
+                targetRotationDirection.Normalize();
+                targetRotationDirection.y = 0;
+
+                if (targetRotationDirection == Vector3.zero)
+                {
+                    targetRotationDirection = transform.forward;
+                }
+
+                Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
+                Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = targetRotation;   
+            }
         }
 
         public void HandleSprinting()
@@ -188,9 +236,9 @@ namespace Moko
             if (PlayerInputManager.instance.moveAmount > 0)
             {
                 rollDirection = PlayerCamera.instance.cameraObject.transform.forward *
-                                PlayerInputManager.instance.verticalInput;
+                                PlayerInputManager.instance.vertical_Input;
                 rollDirection += PlayerCamera.instance.cameraObject.transform.right * 
-                                 PlayerInputManager.instance.horizontalInput;
+                                 PlayerInputManager.instance.horizontal_Input;
                 rollDirection.y = 0;
                 rollDirection.Normalize();
             
@@ -199,6 +247,7 @@ namespace Moko
 
                 // perform a roll animation
                 player.playerAnimatorManager.PlayTargetActionAnimation("Roll_Forward_01", true, true);
+                player.playerLocomotionManager.isRolling = true;
             }
             // if we are stationary, perform a backstep
             else
@@ -224,8 +273,8 @@ namespace Moko
 
             player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
             
-            jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
-            jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+            jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.vertical_Input;
+            jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontal_Input;
 
             jumpDirection.y = 0;
 

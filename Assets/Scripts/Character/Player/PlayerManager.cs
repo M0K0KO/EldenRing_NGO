@@ -90,6 +90,12 @@ namespace Moko
             // STATS
             playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP;
             
+            // LOCK ON
+            playerNetworkManager.isLockedOn.OnValueChanged +=
+                playerNetworkManager.OnIsLockedOnChanged;
+            playerNetworkManager.currentTargetNetworkObjectID.OnValueChanged +=
+                playerNetworkManager.OnLockOnTargetIDChange;
+            
             // EQUIPMENT
             playerNetworkManager.currentRightHandWeaponID.OnValueChanged +=
                 playerNetworkManager.OnCurrentRightHandWeaponIDChange;
@@ -127,6 +133,7 @@ namespace Moko
 
             if (IsOwner)
             {
+                isDead.Value = false;
                 playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
                 playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
                 // restore focus points
@@ -197,6 +204,13 @@ namespace Moko
             playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
             
             // sync armors
+            
+            // lock on
+
+            if (playerNetworkManager.isLockedOn.Value)
+            {
+                playerNetworkManager.OnLockOnTargetIDChange(0, playerNetworkManager.currentTargetNetworkObjectID.Value);
+            }
         }
 
         // DEBUG DELTE LATER

@@ -21,6 +21,7 @@ namespace Moko
         [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
         [HideInInspector] public CharacterCombatManager characterCombatManager;
         [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
+        [HideInInspector] public CharacterLocomotionManager characterLocomotionManager;
 
         [Header("Flags")]
         public bool isPerformingAction = false;
@@ -41,6 +42,7 @@ namespace Moko
             characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
             characterCombatManager = GetComponent<CharacterCombatManager>();
             characterSoundFXManager = GetComponent<CharacterSoundFXManager>();
+            characterLocomotionManager = GetComponent<CharacterLocomotionManager>();
         }
 
         protected virtual void Start()

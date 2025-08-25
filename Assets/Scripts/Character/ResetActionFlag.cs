@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Moko
 {
-    public class ResetCharacterFlag : StateMachineBehaviour
+    public class ResetActionFlag : StateMachineBehaviour
     {
         private CharacterManager character;
         
@@ -20,6 +20,7 @@ namespace Moko
             character.applyRootMotion = false;
             character.canRotate = true;
             character.canMove = true;
+            character.characterLocomotionManager.isRolling = false;
 
             if (character.IsOwner)
             {
