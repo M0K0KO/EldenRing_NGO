@@ -181,6 +181,7 @@ namespace Moko
             if (lock_On_Input && player.playerNetworkManager.isLockedOn.Value)
             {
                 lock_On_Input = false;
+                player.playerCombatManager.SetTarget(null);
                 PlayerCamera.instance.ClearLockOnTargets();
                 player.playerNetworkManager.isLockedOn.Value = false;
                 // Disable lock on
