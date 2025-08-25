@@ -40,6 +40,8 @@ namespace Moko
         
         [Header("MOUSE BUTTON INPUTS")]
         [SerializeField] private bool LMB_Input = false;
+        [SerializeField] private bool BMB_Input = false;
+        [SerializeField] private bool Hold_BMB_Input = false;
 
 
         private void Awake()
@@ -98,7 +100,12 @@ namespace Moko
                 playerControls.PlayerCamera.Movement.performed += i => camera_Input = i.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += i => dodge_Input = true;
                 playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
+                
+                // MOUSE BUTTON
                 playerControls.PlayerActions.LMB.performed += i => LMB_Input = true;
+                playerControls.PlayerActions.BMB.performed += i => BMB_Input = true;
+                playerControls.PlayerActions.HoldBMB.performed += i => Hold_BMB_Input = true;
+                playerControls.PlayerActions.HoldBMB.canceled += i => Hold_BMB_Input = false;
                 
                 // LOCK ON
                 playerControls.PlayerActions.LockOn.performed += i => lock_On_Input = true;
@@ -149,6 +156,8 @@ namespace Moko
             HandleSprintInput();
             HandleJumpInput();
             HandleLMBInput();
+            HandleBMBInput();
+            HandleChargeBMBInput();
         }
 
         // LOCK ON
@@ -324,5 +333,35 @@ namespace Moko
                     player.playerInventoryManager.currentRightHandWeapon);
             }
         }
+        
+        private void HandleBMBInput()
+        {
+            if (BMB_Input)
+            {
+                BMB_Input = false;
+
+                // if we have a ui window open, return and do nothing
+
+                player.playerNetworkManager.SetCharacterActionHand(true);
+
+                // TODO : if two handing, use the two handed action
+
+                player.playerCombatManager.PerformWeaponBasedAction(
+                    player.playerInventoryManager.currentRightHandWeapon.oh_BMB_Action,
+                    player.playerInventoryManager.currentRightHandWeapon);
+            }
+        }
+        
+        private void HandleChargeBMBInput()
+        {
+            if (player.isPerformingAction)
+            {
+                if (player.playerNetworkManager.isUsingRightHand.Value)
+                {
+                    player.playerNetworkManager.isChargingAttack.Value = Hold_BMB_Input;
+                }
+            }
+        }
+        
     }
 }

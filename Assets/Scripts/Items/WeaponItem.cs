@@ -30,7 +30,8 @@ namespace Moko
         
         [Header("Attack Modifiers")]
         public float light_Attack_01_Modifier = 1.1f;
-        // HEAVY ATTACK MODIFIERS
+        public float heavy_Attack_01_Modifier = 1.4f;
+        public float charge_Attack_01_Modifier = 2.0f;
         // CRITICAL DAMAGE MODIFIER ETC
 
         [Header("Stamina Costs")] 
@@ -43,6 +44,7 @@ namespace Moko
         // item based actions
         [Header("Actions")] 
         public WeaponItemAction oh_LMB_Action; // one handed, left mouse button, action
+        public WeaponItemAction oh_BMB_Action; // one handed, back mouse button, action
 
         // ASH OF WAR
 

@@ -63,6 +63,11 @@ namespace Moko
             new NetworkVariable<bool>(
                 false,
                 NetworkVariableReadPermission.Everyone,
+                NetworkVariableWritePermission.Owner);   
+        public NetworkVariable<bool> isChargingAttack =
+            new NetworkVariable<bool>(
+                false,
+                NetworkVariableReadPermission.Everyone,
                 NetworkVariableWritePermission.Owner);
         
         [Header("Stats")]
@@ -136,6 +141,11 @@ namespace Moko
             {
                 character.characterCombatManager.currentTarget = null;
             }
+        }
+        
+        public void OnIsChargingAttackChanged(bool oldStatus, bool newStatus)
+        {
+            character.animator.SetBool("isChargingAttack", isChargingAttack.Value);
         }
 
         [ServerRpc]

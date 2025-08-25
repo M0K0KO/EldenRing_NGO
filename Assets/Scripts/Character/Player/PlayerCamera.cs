@@ -105,7 +105,7 @@ namespace Moko
                 rotationDirection.Normalize();
                 
                 targetRotation = Quaternion.LookRotation(rotationDirection);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnTargetFollowSpeed);
+                cameraPivotTransform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnTargetFollowSpeed);
                 
                 // Save our rotations to our look angles, so when we unlock it doesnt snap too far away
                 leftAndRightLookAngle = transform.eulerAngles.y;

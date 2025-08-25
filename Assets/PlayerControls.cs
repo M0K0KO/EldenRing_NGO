@@ -268,16 +268,25 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""d1d6507f-dd44-46ee-800a-5f9bf1f06413"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""HoldLMB"",
+                    ""name"": ""BMB"",
                     ""type"": ""Button"",
-                    ""id"": ""9229448c-7276-4333-9190-7c9ee12ea28c"",
+                    ""id"": ""ee91ba2e-6295-422e-8788-fe11b0a51714"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold(duration=0.2)"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hold BMB"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""9229448c-7276-4333-9190-7c9ee12ea28c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=0.1)"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -355,6 +364,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""43421456-12e8-4e8a-a57f-68e3ae3d7086"",
+                    ""path"": ""<Mouse>/backButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BMB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""8ab374e9-8993-4c43-b1f0-34392ea87874"",
                     ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
@@ -389,11 +409,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""67d3869b-b8c6-45d5-b9c5-4a39dcdff91d"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/backButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""HoldLMB"",
+                    ""action"": ""Hold BMB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -442,7 +462,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
         m_PlayerActions_LMB = m_PlayerActions.FindAction("LMB", throwIfNotFound: true);
-        m_PlayerActions_HoldLMB = m_PlayerActions.FindAction("HoldLMB", throwIfNotFound: true);
+        m_PlayerActions_BMB = m_PlayerActions.FindAction("BMB", throwIfNotFound: true);
+        m_PlayerActions_HoldBMB = m_PlayerActions.FindAction("Hold BMB", throwIfNotFound: true);
         m_PlayerActions_LockOn = m_PlayerActions.FindAction("Lock On", throwIfNotFound: true);
         m_PlayerActions_SeekLeftLockOnTarget = m_PlayerActions.FindAction("Seek Left Lock On Target", throwIfNotFound: true);
         m_PlayerActions_SeekRightLockOnTarget = m_PlayerActions.FindAction("Seek Right Lock On Target", throwIfNotFound: true);
@@ -728,7 +749,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Sprint;
     private readonly InputAction m_PlayerActions_Jump;
     private readonly InputAction m_PlayerActions_LMB;
-    private readonly InputAction m_PlayerActions_HoldLMB;
+    private readonly InputAction m_PlayerActions_BMB;
+    private readonly InputAction m_PlayerActions_HoldBMB;
     private readonly InputAction m_PlayerActions_LockOn;
     private readonly InputAction m_PlayerActions_SeekLeftLockOnTarget;
     private readonly InputAction m_PlayerActions_SeekRightLockOnTarget;
@@ -760,9 +782,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @LMB => m_Wrapper.m_PlayerActions_LMB;
         /// <summary>
-        /// Provides access to the underlying input action "PlayerActions/HoldLMB".
+        /// Provides access to the underlying input action "PlayerActions/BMB".
         /// </summary>
-        public InputAction @HoldLMB => m_Wrapper.m_PlayerActions_HoldLMB;
+        public InputAction @BMB => m_Wrapper.m_PlayerActions_BMB;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerActions/HoldBMB".
+        /// </summary>
+        public InputAction @HoldBMB => m_Wrapper.m_PlayerActions_HoldBMB;
         /// <summary>
         /// Provides access to the underlying input action "PlayerActions/LockOn".
         /// </summary>
@@ -813,9 +839,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LMB.started += instance.OnLMB;
             @LMB.performed += instance.OnLMB;
             @LMB.canceled += instance.OnLMB;
-            @HoldLMB.started += instance.OnHoldLMB;
-            @HoldLMB.performed += instance.OnHoldLMB;
-            @HoldLMB.canceled += instance.OnHoldLMB;
+            @BMB.started += instance.OnBMB;
+            @BMB.performed += instance.OnBMB;
+            @BMB.canceled += instance.OnBMB;
+            @HoldBMB.started += instance.OnHoldBMB;
+            @HoldBMB.performed += instance.OnHoldBMB;
+            @HoldBMB.canceled += instance.OnHoldBMB;
             @LockOn.started += instance.OnLockOn;
             @LockOn.performed += instance.OnLockOn;
             @LockOn.canceled += instance.OnLockOn;
@@ -848,9 +877,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LMB.started -= instance.OnLMB;
             @LMB.performed -= instance.OnLMB;
             @LMB.canceled -= instance.OnLMB;
-            @HoldLMB.started -= instance.OnHoldLMB;
-            @HoldLMB.performed -= instance.OnHoldLMB;
-            @HoldLMB.canceled -= instance.OnHoldLMB;
+            @BMB.started -= instance.OnBMB;
+            @BMB.performed -= instance.OnBMB;
+            @BMB.canceled -= instance.OnBMB;
+            @HoldBMB.started -= instance.OnHoldBMB;
+            @HoldBMB.performed -= instance.OnHoldBMB;
+            @HoldBMB.canceled -= instance.OnHoldBMB;
             @LockOn.started -= instance.OnLockOn;
             @LockOn.performed -= instance.OnLockOn;
             @LockOn.canceled -= instance.OnLockOn;
@@ -1055,12 +1087,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLMB(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "HoldLMB" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "BMB" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnHoldLMB(InputAction.CallbackContext context);
+        void OnBMB(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Hold BMB" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHoldBMB(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Lock On" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

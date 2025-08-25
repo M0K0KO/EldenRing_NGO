@@ -182,16 +182,25 @@
                     "id": "d1d6507f-dd44-46ee-800a-5f9bf1f06413",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Tap",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "HoldLMB",
+                    "name": "BMB",
                     "type": "Button",
-                    "id": "9229448c-7276-4333-9190-7c9ee12ea28c",
+                    "id": "ee91ba2e-6295-422e-8788-fe11b0a51714",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Hold(duration=0.2)",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Hold BMB",
+                    "type": "PassThrough",
+                    "id": "9229448c-7276-4333-9190-7c9ee12ea28c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=0.1)",
                     "initialStateCheck": false
                 },
                 {
@@ -269,6 +278,17 @@
                 },
                 {
                     "name": "",
+                    "id": "43421456-12e8-4e8a-a57f-68e3ae3d7086",
+                    "path": "<Mouse>/backButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BMB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8ab374e9-8993-4c43-b1f0-34392ea87874",
                     "path": "<Mouse>/middleButton",
                     "interactions": "",
@@ -303,11 +323,11 @@
                 {
                     "name": "",
                     "id": "67d3869b-b8c6-45d5-b9c5-4a39dcdff91d",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/backButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "HoldLMB",
+                    "action": "Hold BMB",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
