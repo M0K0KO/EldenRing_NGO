@@ -16,9 +16,8 @@ namespace Moko
 
         private PlayerControls playerControls;
 
-        [Header("CAMERA MOVEMENT INPUT")] [SerializeField]
-        private Vector2 camera_Input;
-
+        [Header("CAMERA MOVEMENT INPUT")]
+        [SerializeField] private Vector2 camera_Input;
         public float cameraVertical_Input;
         public float cameraHorizontal_Input;
 
@@ -28,18 +27,18 @@ namespace Moko
         [SerializeField] private bool lockOn_Right_Input;
         private Coroutine lockOnCoroutine;
 
-        [Header("PLAYER MOVEMENT INPUT")] [SerializeField]
-        private Vector2 movementInput;
-
+        [Header("PLAYER MOVEMENT INPUT")] 
+        [SerializeField] private Vector2 movementInput;
         public float vertical_Input;
         public float horizontal_Input;
         public float moveAmount;
 
-        [Header("PLAYER ACTION INPUT")] [SerializeField]
-        private bool dodge_Input = false;
-
+        [Header("PLAYER ACTION INPUT")]
+        [SerializeField] private bool dodge_Input = false;
         [SerializeField] private bool sprint_Input = false;
         [SerializeField] private bool jump_Input = false;
+        
+        [Header("MOUSE BUTTON INPUTS")]
         [SerializeField] private bool LMB_Input = false;
 
 
