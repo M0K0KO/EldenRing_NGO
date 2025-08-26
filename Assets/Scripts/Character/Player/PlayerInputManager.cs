@@ -43,6 +43,10 @@ namespace Moko
         [SerializeField] private bool BMB_Input = false;
         [SerializeField] private bool Hold_BMB_Input = false;
 
+        [Header("MOUSE SCROLL INPUTS")] 
+        [SerializeField] private bool switch_Right_Weapon_Input = false;
+        [SerializeField] private bool switch_Left_Weapon_Input = false;
+
 
         private void Awake()
         {
@@ -98,8 +102,14 @@ namespace Moko
 
                 playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += i => camera_Input = i.ReadValue<Vector2>();
+                
+                // ACTIONS
                 playerControls.PlayerActions.Dodge.performed += i => dodge_Input = true;
                 playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
+                
+                // MOUSE SCROLL
+                playerControls.PlayerActions.SwitchRightWeapon.performed += i => switch_Right_Weapon_Input = true;
+                playerControls.PlayerActions.SwitchLeftWeapon.performed += i => switch_Left_Weapon_Input = true;
                 
                 // MOUSE BUTTON
                 playerControls.PlayerActions.LMB.performed += i => LMB_Input = true;
@@ -158,6 +168,8 @@ namespace Moko
             HandleLMBInput();
             HandleBMBInput();
             HandleChargeBMBInput();
+            HandleSwitchRightWeaponInpupt();
+            HandleSwitchLeftWeaponInpupt();
         }
 
         // LOCK ON
@@ -361,6 +373,24 @@ namespace Moko
                 {
                     player.playerNetworkManager.isChargingAttack.Value = Hold_BMB_Input;
                 }
+            }
+        }
+        
+        private void HandleSwitchRightWeaponInpupt()
+        {
+            if (switch_Right_Weapon_Input)
+            {
+                switch_Right_Weapon_Input = false;
+                player.playerEquipmentManager.SwitchRightWeapon();
+            }
+        }
+        
+        private void HandleSwitchLeftWeaponInpupt()
+        {
+            if (switch_Left_Weapon_Input)
+            {
+                switch_Left_Weapon_Input = false;
+                player.playerEquipmentManager.SwitchLeftWeapon();
             }
         }
         

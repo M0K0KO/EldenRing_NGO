@@ -6,6 +6,9 @@ namespace Moko
     public class CharacterCombatManager : NetworkBehaviour
     {
         private CharacterManager character;
+
+        [Header("Last Attack Animation Performed")]
+        public string lastAttackAnimationPerformed;
         
         [Header("Current Target")]
         public CharacterManager currentTarget;

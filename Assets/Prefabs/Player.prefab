@@ -2789,14 +2789,12 @@ MonoBehaviour:
   characterAnimatorManager: {fileID: 0}
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
-  respawnCharacter: 0
-  switchRightWeapon: 0
-  switchLeftWeapon: 0
   playerAnimatorManager: {fileID: 0}
   playerLocomotionManager: {fileID: 0}
   playerNetworkManager: {fileID: 0}
@@ -2816,6 +2814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f377c3d09e91bc4f9e15e0dd4280829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 7531564155904964372}
@@ -2846,11 +2845,15 @@ MonoBehaviour:
     m_InternalValue: 0
   moveAmount:
     m_InternalValue: 0
+  currentTargetNetworkObjectID:
+    m_InternalValue: 0
   isSprinting:
     m_InternalValue: 0
   isJumping:
     m_InternalValue: 0
   isLockedOn:
+    m_InternalValue: 0
+  isChargingAttack:
     m_InternalValue: 0
   vitality:
     m_InternalValue: 15
@@ -2963,6 +2966,7 @@ MonoBehaviour:
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartYVelocity: -5
+  isRolling: 0
   verticalMovement: 0
   horizontalMovement: 0
   moveAmount: 0
@@ -3063,7 +3067,7 @@ MonoBehaviour:
   rightHandWeaponIndex: 0
   weaponsInLeftHandSlots:
   - {fileID: 11400000, guid: b9f658bccafb8c943b869a928f6175ad, type: 2}
-  - {fileID: 11400000, guid: b9f658bccafb8c943b869a928f6175ad, type: 2}
+  - {fileID: 11400000, guid: f9c1e79036df15443bf3e35853429b64, type: 2}
   - {fileID: 11400000, guid: b9f658bccafb8c943b869a928f6175ad, type: 2}
   leftHandWeaponIndex: 0
 --- !u!114 &-3857686413069063766

@@ -7,11 +7,6 @@ namespace Moko
 {
     public class PlayerManager : CharacterManager
     {
-        [Header("DEBUG MENU")] 
-        [SerializeField] private bool respawnCharacter = false;
-        [SerializeField] private bool switchRightWeapon = false;
-        [SerializeField] private bool switchLeftWeapon = false;
-        
         [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
@@ -47,8 +42,6 @@ namespace Moko
             
             // Regen Stamina
             playerStatsManager.RegenerateStamina();
-
-            DebugMenu();
         }
 
         protected override void LateUpdate()
@@ -260,28 +253,6 @@ namespace Moko
             if (playerNetworkManager.isLockedOn.Value)
             {
                 playerNetworkManager.OnLockOnTargetIDChange(0, playerNetworkManager.currentTargetNetworkObjectID.Value);
-            }
-        }
-
-        // DEBUG DELTE LATER
-        private void DebugMenu()
-        {
-            if (respawnCharacter)
-            {
-                respawnCharacter = false;
-                ReviveCharacter();
-            }
-
-            if (switchRightWeapon)
-            {
-                switchRightWeapon = false;
-                playerEquipmentManager.SwitchRightWeapon();
-            }
-
-            if (switchLeftWeapon)
-            {
-                switchLeftWeapon = false;
-                playerEquipmentManager.SwitchLeftWeapon();
             }
         }
     }
