@@ -5,7 +5,7 @@ namespace Moko
 {
     public class CharacterCombatManager : NetworkBehaviour
     {
-        private CharacterManager character;
+        protected CharacterManager character;
 
         [Header("Last Attack Animation Performed")]
         public string lastAttackAnimationPerformed;

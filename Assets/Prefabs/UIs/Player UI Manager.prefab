@@ -203,8 +203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 4907700606477096588}
   staminaBar: {fileID: 3051300128762268178}
-  rightWeaponQuickSlotIcon: {fileID: 6789970558272409469}
-  leftWeaponQuickSlotIcon: {fileID: 3771959614091368452}
+  rightWeaponQuickSlotIcon: {fileID: 3771959614091368452}
+  leftWeaponQuickSlotIcon: {fileID: 6789970558272409469}
 --- !u!1 &774047005834093646
 GameObject:
   m_ObjectHideFlags: 0

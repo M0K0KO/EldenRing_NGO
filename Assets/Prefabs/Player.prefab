@@ -2790,6 +2790,7 @@ MonoBehaviour:
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
   characterLocomotionManager: {fileID: 0}
+  characterGroup: 0
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
@@ -2815,10 +2816,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  lastAttackAnimationPerformed: 
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 7531564155904964372}
   currentWeaponBeingUsed: {fileID: 0}
+  canComboWithMainHandWeapon: 0
 --- !u!114 &7575071151742398071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2858,7 +2861,7 @@ MonoBehaviour:
   vitality:
     m_InternalValue: 15
   endurance:
-    m_InternalValue: 10
+    m_InternalValue: 15
   currentStamina:
     m_InternalValue: 0
   maxStamina:
@@ -3029,7 +3032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef03d7996ec28b94fbd4228d0b86c8f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staminaRegenerationAmount: 2
+  staminaRegenerationAmount: 5
   staminaRegenerationDelay: 2
 --- !u!114 &-8818470572936041016
 MonoBehaviour:
