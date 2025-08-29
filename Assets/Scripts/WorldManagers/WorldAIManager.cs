@@ -10,14 +10,11 @@ namespace Moko
     public class WorldAIManager : MonoBehaviour
     {
         public static WorldAIManager instance;
-
-        [Header("DEBUG")] 
-        [SerializeField] private bool despawnCharacters = false;
-        [SerializeField] private bool respawnCharacters = false;
         
 
+
         [Header("Characters")] 
-        [SerializeField] private GameObject[] aiCharacters;
+        [SerializeField] private List<AICharacterSpawner> aiCharacterSpawners;
         [SerializeField] private List<GameObject> spawnedInCharacters;
 
         private void Awake()
@@ -26,47 +23,12 @@ namespace Moko
             else Destroy(gameObject);
         }
 
-        private void Start()
+        public void SpawnCharacter(AICharacterSpawner aiCharacterSpawner)
         {
             if (NetworkManager.Singleton.IsServer)
             {
-                // Spawn All ai in scene
-                StartCoroutine(WaitForSceneToLoadThenSpawnCharacters());
-            }
-        }
-
-        private void Update()
-        {
-            if (respawnCharacters)
-            {
-                respawnCharacters = false;
-                SpawnAllCharacters();
-            }
-            
-            if (despawnCharacters)
-            {
-                despawnCharacters = false;
-                DespawnAllCharacters();
-            }
-        }
-
-        private IEnumerator WaitForSceneToLoadThenSpawnCharacters()
-        {
-            while (!SceneManager.GetActiveScene().isLoaded)
-            {
-                yield return null;
-            }
-
-            SpawnAllCharacters();
-        }
-
-        private void SpawnAllCharacters()
-        {
-            foreach (var character in aiCharacters)
-            {
-                GameObject instantiatedCharacter = Instantiate(character);
-                instantiatedCharacter.GetComponent<NetworkObject>().Spawn();
-                spawnedInCharacters.Add(instantiatedCharacter);
+                aiCharacterSpawners.Add(aiCharacterSpawner);
+                aiCharacterSpawner.AttemptToSpawnCharacter();
             }
         }
 
@@ -74,7 +36,6 @@ namespace Moko
         {
             foreach (var character in spawnedInCharacters)
             {
-                Debug.Log($"Character isSpawned : {character.GetComponent<NetworkObject>().IsSpawned}");
                 character.GetComponent<NetworkObject>().Despawn();
             }
         }

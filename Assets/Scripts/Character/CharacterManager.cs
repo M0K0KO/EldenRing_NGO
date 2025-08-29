@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Multiplayer.Tools.NetStatsMonitor;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEditor;
@@ -90,6 +91,7 @@ namespace Moko
         {
             base.OnNetworkSpawn();
 
+            characterNetworkManager.OnIsMovingChanged(false, characterNetworkManager.isMoving.Value);
             characterNetworkManager.isMoving.OnValueChanged += characterNetworkManager.OnIsMovingChanged;
         }
         
