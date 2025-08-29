@@ -304,7 +304,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""14f02145-b742-4a9d-82a5-f09344db2282"",
                     ""expectedControlType"": ""Analog"",
                     ""processors"": """",
-                    ""interactions"": ""Press(pressPoint=150)"",
+                    ""interactions"": ""Press(pressPoint=100)"",
                     ""initialStateCheck"": true
                 },
                 {
@@ -313,7 +313,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""12033dbe-0a13-4e97-afc4-960c72a04f10"",
                     ""expectedControlType"": ""Analog"",
                     ""processors"": """",
-                    ""interactions"": ""Press(pressPoint=150)"",
+                    ""interactions"": ""Press(pressPoint=100)"",
                     ""initialStateCheck"": true
                 },
                 {

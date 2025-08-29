@@ -27,6 +27,12 @@ namespace Moko
 
         public AudioClip ChooseRandomSFXFromArray(AudioClip[] array)
         {
+            if (array.Length == 0)
+            {
+                Debug.LogWarning("SFX ARRAY IS EMPTY");
+                return null;
+            }
+            
             int index = Random.Range(0, array.Length);
 
             return array[index];

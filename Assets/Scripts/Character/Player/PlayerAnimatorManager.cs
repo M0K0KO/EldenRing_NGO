@@ -18,7 +18,7 @@ namespace Moko
         
         private void OnAnimatorMove()
         {
-            if (player.applyRootMotion)
+            if (applyRootMotion)
             {
                 Vector3 velocity = player.animator.deltaPosition;
                 player.characterController.Move(velocity);

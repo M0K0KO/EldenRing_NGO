@@ -104,6 +104,7 @@ namespace Moko
                 WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.physicalDamageSFX);
             
             character.characterSoundFXManager.PlaySoundFX(physicalDamageSFX);
+            character.characterSoundFXManager.PlayDamageGrunt();
 
             // if fire damage is greater than 0, play Burn SFX
             // if lightning damage is greater than 0, play zap SFX

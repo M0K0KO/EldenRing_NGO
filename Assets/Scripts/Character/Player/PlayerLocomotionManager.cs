@@ -88,7 +88,7 @@ namespace Moko
  
         private void HandleGroundedMovement()
         {
-            if (!player.canMove) return;
+            if (!player.playerLocomotionManager.canMove) return;
             
             GetMovementValues();
             
@@ -127,7 +127,7 @@ namespace Moko
 
         private void HandleFreeFallMovement()
         {
-            if (!player.isGrounded)
+            if (!player.playerLocomotionManager.isGrounded)
             {
                 Vector3 freefallDirection = Vector3.zero;
                 
@@ -143,7 +143,7 @@ namespace Moko
         {
             if (player.isDead.Value) return;
             
-            if (!player.canRotate) return;
+            if (!player.playerLocomotionManager.canRotate) return;
 
             if (player.playerNetworkManager.isLockedOn.Value || player.playerLocomotionManager.isRolling)
             {
@@ -264,7 +264,7 @@ namespace Moko
             if (player.isPerformingAction) return;
             if (player.playerNetworkManager.currentStamina.Value <= 0) return;
             if (player.playerNetworkManager.isJumping.Value) return;
-            if (!player.isGrounded) return;
+            if (!player.playerLocomotionManager.isGrounded) return;
             
             // if two handed, play two handed jump Animation
             player.playerAnimatorManager.PlayTargetActionAnimation("Main_Jump_01", false);

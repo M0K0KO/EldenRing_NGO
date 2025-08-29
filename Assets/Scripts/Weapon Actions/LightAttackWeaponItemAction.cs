@@ -17,7 +17,7 @@ namespace Moko
 
             if (playerPerformingAction.playerNetworkManager.currentStamina.Value <= 0) return;
 
-            if (!playerPerformingAction.isGrounded) return;
+            if (!playerPerformingAction.playerLocomotionManager.isGrounded) return;
 
             PerformLightAttack(playerPerformingAction, weaponPerformingAction);
         }

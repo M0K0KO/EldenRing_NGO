@@ -28,7 +28,15 @@ MonoBehaviour:
   ligthningDamage: 0
   poiseDamage: 25
   light_Attack_01_Modifier: 1.1
+  light_Attack_02_Modifier: 1.2
+  heavy_Attack_01_Modifier: 1.4
+  heavy_Attack_02_Modifier: 1.6
+  charge_Attack_01_Modifier: 2
+  charge_Attack_02_Modifier: 2.2
   baseStaminaCost: 20
   lightAttackStaminaCostMultiplier: 0.9
   oh_LMB_Action: {fileID: 11400000, guid: 62313b856a9160e4ab51e3d97da9c611, type: 2}
   oh_BMB_Action: {fileID: 11400000, guid: f13e35d41dbc84d49b3ae1132a6d5497, type: 2}
+  whooshes:
+  - {fileID: 8300000, guid: 2c2024b31a64aa34db0fbb80f1fd9b13, type: 3}
+  - {fileID: 8300000, guid: c89f9bebdff50bd4683e310edef158f7, type: 3}

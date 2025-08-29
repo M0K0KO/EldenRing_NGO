@@ -20,6 +20,10 @@ namespace Moko
 
         [Header("Flags")] 
         public bool isRolling = false;
+        public bool canRotate = true;
+        public bool canMove = true;
+        public bool isGrounded = true;
+
         
         protected virtual void Awake()
         {
@@ -30,7 +34,7 @@ namespace Moko
         {
             HandleGroundCheck();
 
-            if (character.isGrounded)
+            if (character.characterLocomotionManager.isGrounded)
             {
                 // if we are not attempting to jump or move upward
                 if (yVelocity.y < 0)
@@ -60,7 +64,7 @@ namespace Moko
 
         protected void HandleGroundCheck()
         {
-            character.isGrounded = 
+            character.characterLocomotionManager.isGrounded = 
                 Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
         }
 
@@ -68,6 +72,16 @@ namespace Moko
         {
             /*Gizmos.color = character.isGrounded ? Color.green : Color.red;
             Gizmos.DrawWireSphere(transform.position, groundCheckSphereRadius);*/
+        }
+
+        public void EnableCanRotate()
+        {
+            canRotate = true;
+        }
+        
+        public void DisableCanRotate()
+        {
+            canRotate = false;
         }
     }
 }

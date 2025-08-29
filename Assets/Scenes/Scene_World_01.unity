@@ -18839,14 +18839,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8257976967307680671, guid: 41694dba61e44274798e3b13c7498f84, type: 3}
-      propertyPath: aiCharacters.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8257976967307680671, guid: 41694dba61e44274798e3b13c7498f84, type: 3}
-      propertyPath: 'aiCharacters.Array.data[1]'
-      value: 
-      objectReference: {fileID: 5108386456493121059, guid: 644bf3e4280db64469e05f1d519b36d2, type: 3}
     - target: {fileID: 8335562642135045935, guid: 41694dba61e44274798e3b13c7498f84, type: 3}
       propertyPath: m_Name
       value: World A.I Manager

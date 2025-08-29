@@ -52,5 +52,8 @@ namespace Moko
         // ASH OF WAR
 
         // blocking sounds
+
+        [Header("Whooshes")]
+        public AudioClip[] whooshes;
     }
 }

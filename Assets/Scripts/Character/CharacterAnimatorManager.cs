@@ -10,6 +10,9 @@ namespace Moko
 
         private readonly int vertical = Animator.StringToHash("Vertical");
         private readonly int horizontal = Animator.StringToHash("Horizontal");
+        
+        [Header("Flags")]
+        public bool applyRootMotion = false;
 
         [Header("Damage Animations")] 
         public string lastDamageAnimationPlayed;
@@ -137,7 +140,7 @@ namespace Moko
             bool canMove = false)
         {
             //Debug.Log("PLAYING ANIMATION : " + targetAnimation);
-            character.applyRootMotion = applyRootMotion;
+            this.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(targetAnimation, 0.2f);
 
             // can be used to stop character from ateempting new actions
@@ -145,8 +148,8 @@ namespace Moko
             // this flag will turn true if you are stunned
             // then we can check for this before attempting new actions
             character.isPerformingAction = isPerformingAction;
-            character.canRotate = canRotate;
-            character.canMove = canMove;
+            character.characterLocomotionManager.canRotate = canRotate;
+            character.characterLocomotionManager.canMove = canMove;
 
             // Tell the server we played an animation, and to play that animation for everybody else present
             character.characterNetworkManager.NotifyTheServerOfActionAnimationServerRpc(
@@ -170,11 +173,11 @@ namespace Moko
             // tell the network our "ISATTACKING" flag (for counter damage etc)
             character.characterCombatManager.currentAttackType = attackType;
             character.characterCombatManager.lastAttackAnimationPerformed = targetAnimation;
-            character.applyRootMotion = applyRootMotion;
+            this.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(targetAnimation, 0.2f);
             character.isPerformingAction = isPerformingAction;
-            character.canRotate = canRotate;
-            character.canMove = canMove;
+            character.characterLocomotionManager.canRotate = canRotate;
+            character.characterLocomotionManager.canMove = canMove;
 
             // Tell the server we played an animation, and to play that animation for everybody else present
             character.characterNetworkManager.NotifyTheServerOfAttackActionAnimationServerRpc(

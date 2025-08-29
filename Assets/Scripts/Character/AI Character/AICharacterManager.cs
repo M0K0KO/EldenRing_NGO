@@ -19,9 +19,9 @@ namespace Moko
         [Header("States")] 
         public IdleState idle;
         public PursueTargetState pursueTarget;
-        // Combat Stance
-        // Attack
-
+        public CombatStanceState combatStance;
+        public AttackState attack;
+        
         protected override void Awake()
         {
             base.Awake();
@@ -39,11 +39,21 @@ namespace Moko
             currentState = idle;
         }
 
+        protected override void Update()
+        {
+            base.Update();
+
+            aiCharacterCombatManager.HandleActionRecovery(this);
+        }
+
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
 
-            ProcessStateMachine();
+            if (IsOwner)
+            {
+                ProcessStateMachine();
+            }
         }
 
         private void ProcessStateMachine()
@@ -55,6 +65,16 @@ namespace Moko
             // the position/rotation should be reset only after the state machine has processed
             navMeshAgent.transform.localPosition = Vector3.zero;
             navMeshAgent.transform.localRotation = Quaternion.identity;
+
+            if (aiCharacterCombatManager.currentTarget != null)
+            {
+                aiCharacterCombatManager.targetsDirection =
+                    aiCharacterCombatManager.currentTarget.transform.position - transform.position;
+                aiCharacterCombatManager.viewableAngle =
+                    WorldUtilityManager.instance.GetAngleOfTarget(transform, aiCharacterCombatManager.targetsDirection);
+                aiCharacterCombatManager.distanceFromTarget =
+                    Vector3.Distance(transform.position, aiCharacterCombatManager.currentTarget.transform.position);
+            }
 
             if (navMeshAgent.enabled)
             {
