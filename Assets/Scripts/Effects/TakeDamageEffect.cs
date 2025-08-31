@@ -40,6 +40,8 @@ namespace Moko
         
         public override void ProcessEffect(CharacterManager character)
         {
+            if (character.characterNetworkManager.isInvulnerable.Value) return;
+            
             base.ProcessEffect(character);
 
             if (character.isDead.Value) return; // check if the character is dead

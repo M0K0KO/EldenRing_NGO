@@ -36,12 +36,18 @@ namespace Moko
 
         public virtual void PlayDamageGrunt()
         {
-            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(damageGrunts));
+            if (damageGrunts.Length > 0)
+            {
+                PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(damageGrunts));
+            }
         }
 
         public virtual void PlayAttackGrunt()
         {
-            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(attackGrunts));
+            if (damageGrunts.Length > 0)
+            {
+                PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(attackGrunts));
+            }
         }
     }
 }

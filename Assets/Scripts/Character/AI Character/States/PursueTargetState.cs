@@ -20,12 +20,17 @@ namespace Moko
                 aiCharacter.navMeshAgent.enabled = true;
 
             // if our target goes outside of the charactesr FOV, pivot to face them
-            if (aiCharacter.aiCharacterCombatManager.viewableAngle < aiCharacter.aiCharacterCombatManager.minimumFOV ||
-                aiCharacter.aiCharacterCombatManager.viewableAngle > aiCharacter.aiCharacterCombatManager.maximumFOV)
+            if (aiCharacter.aiCharacterCombatManager.enablePivot)
             {
-                aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+                if (aiCharacter.aiCharacterCombatManager.viewableAngle <
+                    aiCharacter.aiCharacterCombatManager.minimumFOV ||
+                    aiCharacter.aiCharacterCombatManager.viewableAngle >
+                    aiCharacter.aiCharacterCombatManager.maximumFOV)
+                {
+                    aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+                }
             }
-            
+
             aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
 
             // if we are within combat range of a target, switch state to combat stance state

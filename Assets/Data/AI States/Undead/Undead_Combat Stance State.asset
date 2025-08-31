@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f71145369e61280498e2396cff2b49c2, type: 3}
-  m_Name: Combat Stance State
+  m_Name: Undead_Combat Stance State
   m_EditorClassIdentifier: 
   aiCharacterAttacks:
   - {fileID: 11400000, guid: d5b6368c99e5e9d4ea769dbedc9bfd53, type: 2}
   - {fileID: 11400000, guid: d4c4a08dfd4c47d448cd6c2089a56a02, type: 2}
+  enablePivot: 1
   canPerformCombo: 0
   chanceToPerformCombo: 25
   maximumEngagementDistance: 5

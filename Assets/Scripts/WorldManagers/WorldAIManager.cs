@@ -11,8 +11,6 @@ namespace Moko
     {
         public static WorldAIManager instance;
         
-
-
         [Header("Characters")] 
         [SerializeField] private List<AICharacterSpawner> aiCharacterSpawners;
         [SerializeField] private List<GameObject> spawnedInCharacters;

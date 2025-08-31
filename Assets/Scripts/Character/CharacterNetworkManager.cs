@@ -8,6 +8,13 @@ namespace Moko
     public class CharacterNetworkManager : NetworkBehaviour
     {
         private CharacterManager character;
+
+        [Header("Active")] 
+        public NetworkVariable<bool> isActive = 
+            new NetworkVariable<bool>(
+                true,
+            NetworkVariableReadPermission.Everyone, 
+                NetworkVariableWritePermission.Owner);
         
         [Header("Position")] 
         public NetworkVariable<Vector3> networkPosition =
@@ -54,6 +61,11 @@ namespace Moko
                 NetworkVariableWritePermission.Owner);
 
         [Header("Flags")]
+        public NetworkVariable<bool> isInvulnerable =
+            new NetworkVariable<bool>(
+                false,
+                NetworkVariableReadPermission.Everyone,
+                NetworkVariableWritePermission.Owner);
         public NetworkVariable<bool> isSprinting =
             new NetworkVariable<bool>(
                 false,
@@ -108,7 +120,7 @@ namespace Moko
                 0,
                 NetworkVariableReadPermission.Everyone, 
                 NetworkVariableWritePermission.Owner);
-
+        
         protected virtual void Awake()
         {
             character = GetComponent<CharacterManager>();
@@ -156,6 +168,11 @@ namespace Moko
         public void OnIsMovingChanged(bool oldStatus, bool newStatus)
         {
             character.animator.SetBool("isMoving", isMoving.Value);
+        }
+
+        public virtual void OnIsActiveChanged(bool oldStatus, bool newStatus)
+        {
+            gameObject.SetActive(isActive.Value);
         }
 
         [ServerRpc]

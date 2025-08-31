@@ -39,8 +39,6 @@ namespace Moko
                 
                 // check if target is blocking
                 
-                // check if target is invulnerable
-
                 DamageTarget(damageTarget); // damage appliance
             }
         }

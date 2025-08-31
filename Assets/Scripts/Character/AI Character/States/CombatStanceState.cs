@@ -35,13 +35,16 @@ namespace Moko
                 aiCharacter.navMeshAgent.enabled = true;
             
             // if you want the ai character to face and turn towards its target when its outside it's fov include this
-            if (!aiCharacter.aiCharacterNetworkManager.isMoving.Value)
+            if (aiCharacter.aiCharacterCombatManager.enablePivot)
             {
-                if (aiCharacter.aiCharacterCombatManager.viewableAngle < -30 ||
-                    aiCharacter.aiCharacterCombatManager.viewableAngle > 30)
-                    aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+                if (!aiCharacter.aiCharacterNetworkManager.isMoving.Value)
+                {
+                    if (aiCharacter.aiCharacterCombatManager.viewableAngle < -30 ||
+                        aiCharacter.aiCharacterCombatManager.viewableAngle > 30)
+                        aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+                }
             }
-            
+
             // rotate to face our target
             aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
             

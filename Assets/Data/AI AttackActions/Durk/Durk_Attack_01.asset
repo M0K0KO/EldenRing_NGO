@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ba2ac869dd70fc4aa1416f4d357baa2, type: 3}
-  m_Name: Attack_01
+  m_Name: Durk_Attack_01
   m_EditorClassIdentifier: 
   attackAnimation: Attack_01
   comboAction: {fileID: 0}
@@ -20,4 +20,4 @@ MonoBehaviour:
   minimumAttackAngle: -35
   maximumAttackAngle: 35
   minimumAttackDistance: 0
-  maximumAttackDistance: 2.5
+  maximumAttackDistance: 5

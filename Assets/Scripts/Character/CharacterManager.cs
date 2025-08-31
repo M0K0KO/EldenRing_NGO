@@ -92,7 +92,10 @@ namespace Moko
             base.OnNetworkSpawn();
 
             characterNetworkManager.OnIsMovingChanged(false, characterNetworkManager.isMoving.Value);
+            characterNetworkManager.OnIsActiveChanged(false, characterNetworkManager.isActive.Value);
+            
             characterNetworkManager.isMoving.OnValueChanged += characterNetworkManager.OnIsMovingChanged;
+            characterNetworkManager.isActive.OnValueChanged += characterNetworkManager.OnIsActiveChanged;
         }
         
         public override void OnNetworkDespawn()
@@ -100,6 +103,7 @@ namespace Moko
             base.OnNetworkDespawn();
 
             characterNetworkManager.isMoving.OnValueChanged -= characterNetworkManager.OnIsMovingChanged;
+            characterNetworkManager.isActive.OnValueChanged -= characterNetworkManager.OnIsActiveChanged;
         }
 
         public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
